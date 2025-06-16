@@ -1,17 +1,17 @@
-import { useState, useEffect } from 'react'
-import { COMMAND_PRIORITY_EDITOR, createCommand } from "lexical"
-import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext"
-import { mergeRegister } from "@lexical/utils"
-import { $createVideoNode, VideoNode } from "../nodes/VideoNode"
-import TextInput from '../components/Input/TextInput'
-import FileInput from '../components/Input/FileInput'
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
+import { mergeRegister } from '@lexical/utils'
 import { $insertNodeToNearestRoot } from '@lexical/utils'
+import { COMMAND_PRIORITY_EDITOR, createCommand } from 'lexical'
+import { useEffect, useState } from 'react'
+import FileInput from '../components/Input/FileInput'
+import TextInput from '../components/Input/TextInput'
+import { $createVideoNode, VideoNode } from '../nodes/VideoNode'
 
-export const INSERT_VIDEO_COMMAND = createCommand("INSERT_VIDEO_COMMAND")
+export const INSERT_VIDEO_COMMAND = createCommand('INSERT_VIDEO_COMMAND')
 
 export function InsertVideoDialog({
   editor,
-  onClose
+  onClose,
 }) {
   const [mode, setMode] = useState(null) // url | file
 
@@ -36,9 +36,9 @@ export function InsertVideoDialog({
 }
 
 export function InsertVideoUriDialog({ onClick }) {
-  const [src, setSrc] = useState("")
+  const [src, setSrc] = useState('')
 
-  const isDisabled = src === ""
+  const isDisabled = src === ''
 
   return (
     <>
@@ -62,9 +62,9 @@ export function InsertVideoUriDialog({ onClick }) {
 }
 
 export function InsertVideoUploadDialog({ onClick }) {
-  const [src, setSrc] = useState("")
+  const [src, setSrc] = useState('')
 
-  const isDisabled = src === ""
+  const isDisabled = src === ''
 
   const loadVideo = (files) => {
     console.log(files)
@@ -95,7 +95,7 @@ export default function VideoPlugin() {
 
   useEffect(() => {
     if (!editor.hasNodes([VideoNode])) {
-      throw new Error("VideoPlugin: VideoNode not registered on editor");
+      throw new Error('VideoPlugin: VideoNode not registered on editor')
     }
 
     return mergeRegister(
@@ -104,11 +104,11 @@ export default function VideoPlugin() {
         (payload) => {
           const videoNode = $createVideoNode(payload)
           $insertNodeToNearestRoot(videoNode)
-          
+
           return true
         },
-        COMMAND_PRIORITY_EDITOR
-      )
+        COMMAND_PRIORITY_EDITOR,
+      ),
     )
   }, [editor])
 }

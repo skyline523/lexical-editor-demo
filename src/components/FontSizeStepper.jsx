@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react'
-import { $getSelection } from 'lexical'
 import { $patchStyleText } from '@lexical/selection'
+import { $getSelection } from 'lexical'
+import { useEffect, useState } from 'react'
 
 const DEFAULT_FONT_SIZE = 15
 const MAX_ALLOWED_FONT_SIZE = 72
@@ -118,8 +118,9 @@ export const updateFontSize = (
 ) => {
   if (inputValue !== '') {
     const nextFontSize = calculateNextFontSize(Number(inputValue), updateType)
-    updateFontSizeInSelection(editor, String(nextFontSize) + 'px', null)
-  } else {
+    updateFontSizeInSelection(editor, `${String(nextFontSize)}px`, null)
+  }
+  else {
     updateFontSizeInSelection(editor, null, updateType)
   }
 }
@@ -173,12 +174,13 @@ function FontSizeStepper({
     let updatedFontSize = inputValueNumber
     if (inputValueNumber > MAX_ALLOWED_FONT_SIZE) {
       updatedFontSize = MAX_ALLOWED_FONT_SIZE
-    } else if (inputValueNumber < MIN_ALLOWED_FONT_SIZE) {
+    }
+    else if (inputValueNumber < MIN_ALLOWED_FONT_SIZE) {
       updatedFontSize = MIN_ALLOWED_FONT_SIZE
     }
 
     setInputValue(String(updatedFontSize))
-    updateFontSizeInSelection(editor, String(updatedFontSize) + 'px', null)
+    updateFontSizeInSelection(editor, `${String(updatedFontSize)}px`, null)
     setInputChangeFlag(false)
   }
 
@@ -191,13 +193,12 @@ function FontSizeStepper({
       <button
         type="button"
         disabled={
-          disabled ||
-          (selectionFontSize !== '' &&
-            Number(inputValue) <= MIN_ALLOWED_FONT_SIZE)
+          disabled
+          || (selectionFontSize !== ''
+            && Number(inputValue) <= MIN_ALLOWED_FONT_SIZE)
         }
         onClick={() =>
-          updateFontSize(editor, UpdateFontSizeType.decrement, inputValue)
-        }
+          updateFontSize(editor, UpdateFontSizeType.decrement, inputValue)}
         className="toolbar-item font-decrement"
       >
         <i className="format minus-icon" />
@@ -211,7 +212,7 @@ function FontSizeStepper({
         className="toolbar-item font-size-input"
         min={MIN_ALLOWED_FONT_SIZE}
         max={MAX_ALLOWED_FONT_SIZE}
-        onChange={(e) => setInputValue(e.target.value)}
+        onChange={e => setInputValue(e.target.value)}
         onKeyDown={handleKeyPress}
         onBlur={handleInputBlur}
       />
@@ -219,13 +220,12 @@ function FontSizeStepper({
       <button
         type="button"
         disabled={
-          disabled ||
-          (selectionFontSize !== '' &&
-            Number(inputValue) >= MAX_ALLOWED_FONT_SIZE)
+          disabled
+          || (selectionFontSize !== ''
+            && Number(inputValue) >= MAX_ALLOWED_FONT_SIZE)
         }
         onClick={() =>
-          updateFontSize(editor, UpdateFontSizeType.increment, inputValue)
-        }
+          updateFontSize(editor, UpdateFontSizeType.increment, inputValue)}
         className="toolbar-item font-increment"
       >
         <i className="format add-icon" />

@@ -1,48 +1,48 @@
-import { useEffect, useRef } from 'react'
-import {
-  $getSelection,
-  $isRangeSelection,
-  $createParagraphNode,
-
-} from 'lexical'
 import { $createCodeNode } from '@lexical/code'
-import { 
-  INSERT_UNORDERED_LIST_COMMAND,
+import {
   INSERT_ORDERED_LIST_COMMAND,
+  INSERT_UNORDERED_LIST_COMMAND,
   REMOVE_LIST_COMMAND,
 } from '@lexical/list'
-import { $wrapNodes } from '@lexical/selection'
 import { $createHeadingNode, $createQuoteNode } from '@lexical/rich-text'
+import { $wrapNodes } from '@lexical/selection'
+import {
+  $createParagraphNode,
+  $getSelection,
+  $isRangeSelection,
+
+} from 'lexical'
+import { useEffect, useRef } from 'react'
 
 export const supportedBlockTypes = new Set([
-  "paragraph",
-  "quote",
-  "code",
-  "h1",
-  "h2",
-  "h3",
-  "ul",
-  "ol"
+  'paragraph',
+  'quote',
+  'code',
+  'h1',
+  'h2',
+  'h3',
+  'ul',
+  'ol',
 ])
 
 export const blockTypeToBlockName = {
-  code: "代码块",
-  h1: "一级标题",
-  h2: "二级标题",
-  h3: "三级标题",
-  h4: "四级标题",
-  h5: "五级标题",
-  ol: "排序列表",
-  paragraph: "正文",
-  quote: "引用",
-  ul: "列表"
+  code: '代码块',
+  h1: '一级标题',
+  h2: '二级标题',
+  h3: '三级标题',
+  h4: '四级标题',
+  h5: '五级标题',
+  ol: '排序列表',
+  paragraph: '正文',
+  quote: '引用',
+  ul: '列表',
 }
 
 function BlockOptionDropdownList({
   editor,
   value,
   referenceRef,
-  setVisible
+  setVisible,
 }) {
   const dropdownRef = useRef(null)
 
@@ -79,7 +79,7 @@ function BlockOptionDropdownList({
   }, [dropdownRef, referenceRef, setVisible])
 
   const formatParagraph = () => {
-    if (value !== "paragraph") {
+    if (value !== 'paragraph') {
       editor.update(() => {
         const selection = $getSelection()
 
@@ -92,7 +92,7 @@ function BlockOptionDropdownList({
   }
 
   const formatHeading1 = () => {
-    if (value !== "h1") {
+    if (value !== 'h1') {
       editor.update(() => {
         const selection = $getSelection()
 
@@ -105,7 +105,7 @@ function BlockOptionDropdownList({
   }
 
   const formatHeading2 = () => {
-    if (value !== "h2") {
+    if (value !== 'h2') {
       editor.update(() => {
         const selection = $getSelection()
 
@@ -118,7 +118,7 @@ function BlockOptionDropdownList({
   }
 
   const formatHeading3 = () => {
-    if (value !== "h3") {
+    if (value !== 'h3') {
       editor.update(() => {
         const selection = $getSelection()
 
@@ -131,25 +131,27 @@ function BlockOptionDropdownList({
   }
 
   const formatUnorderList = () => {
-    if (value !== "ul") {
+    if (value !== 'ul') {
       editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND)
-    } else {
+    }
+    else {
       editor.dispatchCommand(REMOVE_LIST_COMMAND)
     }
     setVisible(false)
   }
 
   const formatOrderList = () => {
-    if (value !== "ol") {
+    if (value !== 'ol') {
       editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND)
-    } else {
+    }
+    else {
       editor.dispatchCommand(REMOVE_LIST_COMMAND)
     }
     setVisible(false)
   }
 
   const formatQuote = () => {
-    if (value !== "quote") {
+    if (value !== 'quote') {
       editor.update(() => {
         const selection = $getSelection()
 
@@ -162,7 +164,7 @@ function BlockOptionDropdownList({
   }
 
   const formatCode = () => {
-    if (value !== "code") {
+    if (value !== 'code') {
       editor.update(() => {
         const selection = $getSelection()
 
@@ -175,36 +177,36 @@ function BlockOptionDropdownList({
   }
 
   return (
-    <div ref={dropdownRef} className='dropdown'>
-      <button className={`item${value === "paragraph" ? " active" : ""}`} onClick={formatParagraph}>
+    <div ref={dropdownRef} className="dropdown">
+      <button className={`item${value === 'paragraph' ? ' active' : ''}`} onClick={formatParagraph}>
         <span className="icon paragraph" />
         <span className="text">正文</span>
       </button>
-      <button className={`item${value === "h1" ? " active" : ""}`} onClick={formatHeading1}>
+      <button className={`item${value === 'h1' ? ' active' : ''}`} onClick={formatHeading1}>
         <span className="icon heading-1" />
         <span className="text">一级标题</span>
       </button>
-      <button className={`item${value === "h2" ? " active" : ""}`} onClick={formatHeading2}>
+      <button className={`item${value === 'h2' ? ' active' : ''}`} onClick={formatHeading2}>
         <span className="icon heading-2" />
         <span className="text">二级标题</span>
       </button>
-      <button className={`item${value === "h3" ? " active" : ""}`} onClick={formatHeading3}>
+      <button className={`item${value === 'h3' ? ' active' : ''}`} onClick={formatHeading3}>
         <span className="icon heading-3" />
         <span className="text">三级标题</span>
       </button>
-      <button className={`item${value === "ul" ? " active" : ""}`} onClick={formatUnorderList}>
+      <button className={`item${value === 'ul' ? ' active' : ''}`} onClick={formatUnorderList}>
         <span className="icon bullet-list" />
         <span className="text">列表</span>
       </button>
-      <button className={`item${value === "ol" ? " active" : ""}`} onClick={formatOrderList}>
+      <button className={`item${value === 'ol' ? ' active' : ''}`} onClick={formatOrderList}>
         <span className="icon numbered-list" />
         <span className="text">排序列表</span>
       </button>
-      <button className={`item${value === "quote" ? " active" : ""}`} onClick={formatQuote}>
+      <button className={`item${value === 'quote' ? ' active' : ''}`} onClick={formatQuote}>
         <span className="icon quote" />
         <span className="text">引用</span>
       </button>
-      <button className={`item${value === "code" ? " active" : ""}`} onClick={formatCode}>
+      <button className={`item${value === 'code' ? ' active' : ''}`} onClick={formatCode}>
         <span className="icon code" />
         <span className="text">代码块</span>
       </button>

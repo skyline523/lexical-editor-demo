@@ -1,7 +1,7 @@
-import { useState, useEffect, useContext, useMemo, createContext } from "react"
-import TextInput from "../components/Input/TextInput"
-import { INSERT_TABLE_COMMAND, TableCellNode, TableNode, TableRowNode } from "@lexical/table"
-import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext"
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
+import { INSERT_TABLE_COMMAND, TableCellNode, TableNode, TableRowNode } from '@lexical/table'
+import { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import TextInput from '../components/Input/TextInput'
 
 export const CellContext = createContext({
   cellEditorConfig: null,
@@ -15,7 +15,7 @@ export function TableContext({ children }) {
   const [contextValue, setContextValue] = useState({
     cellEditorConfig: null,
     cellEditorPlugins: null,
-  });
+  })
   return (
     <CellContext.Provider
       value={useMemo(
@@ -23,19 +23,20 @@ export function TableContext({ children }) {
           cellEditorConfig: contextValue.cellEditorConfig,
           cellEditorPlugins: contextValue.cellEditorPlugins,
           set: (cellEditorConfig, cellEditorPlugins) => {
-            setContextValue({cellEditorConfig, cellEditorPlugins});
+            setContextValue({ cellEditorConfig, cellEditorPlugins })
           },
         }),
         [contextValue.cellEditorConfig, contextValue.cellEditorPlugins],
-      )}>
+      )}
+    >
       {children}
     </CellContext.Provider>
-  );
+  )
 }
 
 export function InsertTableDialog({
   editor,
-  onClose
+  onClose,
 }) {
   const [rows, setRows] = useState('5')
   const [columns, setColumns] = useState('5')
@@ -47,7 +48,8 @@ export function InsertTableDialog({
 
     if (row && row > 0 && row <= 100 && column && column > 0 && column <= 50) {
       setIsDisabled(false)
-    } else {
+    }
+    else {
       setIsDisabled(true)
     }
   }, [rows, columns])
@@ -55,7 +57,7 @@ export function InsertTableDialog({
   const onClick = () => {
     editor.dispatchCommand(INSERT_TABLE_COMMAND, {
       columns,
-      rows
+      rows,
     })
 
     onClose()
@@ -88,7 +90,7 @@ export function InsertTableDialog({
 
 export function TablePlugin({
   cellEditorConfig,
-  children
+  children,
 }) {
   const [editor] = useLexicalComposerContext()
   const cellContext = useContext(CellContext)
@@ -96,7 +98,7 @@ export function TablePlugin({
   useEffect(() => {
     if (!editor.hasNodes([TableNode, TableRowNode, TableCellNode])) {
       throw new Error(
-        'TablePlugin: TableNode, TableRowNode, or TableCellNode is not registered on editor'
+        'TablePlugin: TableNode, TableRowNode, or TableCellNode is not registered on editor',
       )
     }
   }, [editor])

@@ -1,19 +1,19 @@
-import {useCallback, useMemo, useState} from 'react';
+import { useCallback, useMemo, useState } from 'react'
 
-import Modal from '../components/Modal';
+import Modal from '../components/Modal'
 
 export default function useModal() {
-  const [modalContent, setModalContent] = useState(null);
+  const [modalContent, setModalContent] = useState(null)
 
   const onClose = useCallback(() => {
-    setModalContent(null);
-  }, []);
+    setModalContent(null)
+  }, [])
 
   const modal = useMemo(() => {
     if (modalContent === null) {
-      return null;
+      return null
     }
-    const {title, content, closeOnClickOutside} = modalContent;
+    const { title, content, closeOnClickOutside } = modalContent
     return (
       <Modal
         onClose={onClose}
@@ -22,8 +22,8 @@ export default function useModal() {
       >
         {content}
       </Modal>
-    );
-  }, [modalContent, onClose]);
+    )
+  }, [modalContent, onClose])
 
   const showModal = useCallback(
     (
@@ -35,10 +35,10 @@ export default function useModal() {
         closeOnClickOutside,
         content: getContent(onClose),
         title,
-      });
+      })
     },
     [onClose],
-  );
+  )
 
-  return [modal, showModal];
+  return [modal, showModal]
 }

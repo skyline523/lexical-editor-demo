@@ -1,5 +1,5 @@
-import { useEffect, useRef } from "react"
 import { CODE_LANGUAGE_FRIENDLY_NAME_MAP } from '@lexical/code'
+import { useEffect, useRef } from 'react'
 
 function getCodeLanguageOptions() {
   const options = []
@@ -19,7 +19,7 @@ function CodeBlockDropdownList({
   referenceRef,
   value,
   setVisible,
-  onChange
+  onChange,
 }) {
   const dropdownRef = useRef(null)
 
@@ -60,13 +60,13 @@ function CodeBlockDropdownList({
       {CODE_LANGUAGE_OPTIONS.map(([option, text]) => (
         <button
           key={option}
-          className={`item${option === value ? " active" : ""}`}
+          className={`item${option === value ? ' active' : ''}`}
           onClick={() => {
             onChange(option)
             setVisible(false)
           }}
         >
-          <span className='text'>{text}</span>
+          <span className="text">{text}</span>
         </button>
       ))}
     </div>

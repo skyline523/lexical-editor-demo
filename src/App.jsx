@@ -1,4 +1,4 @@
-import Editor from "./Editor"
+import Editor from './Editor'
 import './App.css'
 
 const html = `
@@ -11,7 +11,7 @@ function App() {
       <Editor
         value={html}
         disabled={false}
-        height={'auto'}
+        height="auto"
         onChange={(value) => {
           // console.log(value)
         }}

@@ -29,10 +29,10 @@ function PortalImpl({
     const clickOutsideHandler = (event) => {
       const target = event.target
       if (
-        modalRef.current !== null &&
-        isDOMNode(target) &&
-        !modalRef.current.contains(target) &&
-        closeOnClickOutside
+        modalRef.current !== null
+        && isDOMNode(target)
+        && !modalRef.current.contains(target)
+        && closeOnClickOutside
       ) {
         console.log(event)
         onClose()

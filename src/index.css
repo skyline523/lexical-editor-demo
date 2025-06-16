@@ -76,7 +76,6 @@ h1 {
   line-height: 14px;
 }
 
-
 .debug-timetravel-panel {
   overflow: hidden;
   padding: 0 0 10px 0;
@@ -301,7 +300,9 @@ input[type='number'] {
   z-index: 5;
   display: block;
   position: absolute;
-  box-shadow: 0 12px 28px 0 rgba(0, 0, 0, 0.2), 0 2px 4px 0 rgba(0, 0, 0, 0.1),
+  box-shadow:
+    0 12px 28px 0 rgba(0, 0, 0, 0.2),
+    0 2px 4px 0 rgba(0, 0, 0, 0.1),
     inset 0 0 0 1px rgba(255, 255, 255, 0.5);
   border-radius: 4px;
   min-width: 100px;
@@ -405,7 +406,7 @@ input[type='number'] {
   line-height: 16px;
   background-size: contain;
   opacity: 0.75;
-  cursor: pointer; 
+  cursor: pointer;
 }
 
 .link-editor .link-action .icon:hover {
@@ -576,7 +577,7 @@ i.strikethrough {
 }
 
 i.code {
-  background-image: url(./assets/code.svg)
+  background-image: url(./assets/code.svg);
 }
 
 i.baseline {

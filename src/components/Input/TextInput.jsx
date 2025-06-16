@@ -1,4 +1,4 @@
-import './Input.css';
+import './Input.css'
 
 export default function TextInput({
   label,
@@ -16,9 +16,9 @@ export default function TextInput({
         placeholder={placeholder}
         value={value}
         onChange={(e) => {
-          onChange(e.target.value);
+          onChange(e.target.value)
         }}
       />
     </div>
-  );
+  )
 }

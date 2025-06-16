@@ -1,13 +1,14 @@
-import { useEffect } from "react"
-import { $getRoot, CLEAR_HISTORY_COMMAND } from "lexical"
-import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext"
-import { $generateNodesFromDOM } from "@lexical/html"
+import { $generateNodesFromDOM } from '@lexical/html'
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
+import { $getRoot, CLEAR_HISTORY_COMMAND } from 'lexical'
+import { useEffect } from 'react'
 
 export default function ContentInitPlugin({ value }) {
   const [editor] = useLexicalComposerContext()
-  
+
   useEffect(() => {
-    if (!editor || !value) return
+    if (!editor || !value)
+      return
 
     editor.update(() => {
       const parser = new DOMParser()

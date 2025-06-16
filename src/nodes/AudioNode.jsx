@@ -1,12 +1,12 @@
-import { $applyNodeReplacement } from "lexical"
-import { DecoratorBlockNode } from "@lexical/react/LexicalDecoratorBlockNode"
-import { BlockWithAlignableContents } from "@lexical/react/LexicalBlockWithAlignableContents"
+import { BlockWithAlignableContents } from '@lexical/react/LexicalBlockWithAlignableContents'
+import { DecoratorBlockNode } from '@lexical/react/LexicalDecoratorBlockNode'
+import { $applyNodeReplacement } from 'lexical'
 
 function AudioComponent({
   src,
   className,
   nodeKey,
-  format
+  format,
 }) {
   return (
     <BlockWithAlignableContents
@@ -29,7 +29,6 @@ function convertAudioElement(domNode) {
   }
   return null
 }
-
 
 export class AudioNode extends DecoratorBlockNode {
   __src
@@ -100,7 +99,7 @@ export class AudioNode extends DecoratorBlockNode {
     const embedBlockTheme = config.theme.embedBlock || {}
     const className = {
       base: embedBlockTheme.base || '',
-      focus: embedBlockTheme.focus || ''
+      focus: embedBlockTheme.focus || '',
     }
 
     return (

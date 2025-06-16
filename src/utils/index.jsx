@@ -11,7 +11,8 @@ export function getSelectedNode(selection) {
   const isBackward = selection.isBackward()
   if (isBackward) {
     return $isAtNodeEnd(focus) ? anchorNode : focusNode
-  } else {
+  }
+  else {
     return $isAtNodeEnd(anchor) ? focusNode : anchorNode
   }
 }

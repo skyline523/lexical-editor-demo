@@ -1,5 +1,5 @@
-import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext'
-import {useLexicalEditable} from '@lexical/react/useLexicalEditable'
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
+import { useLexicalEditable } from '@lexical/react/useLexicalEditable'
 import {
   $computeTableMapSkipCellCheck,
   $deleteTableColumnAtSelection,
@@ -46,9 +46,9 @@ function computeSelectionCount(selection) {
 function $canUnmerge() {
   const selection = $getSelection()
   if (
-    ($isRangeSelection(selection) && !selection.isCollapsed()) ||
-    ($isTableSelection(selection) && !selection.anchor.is(selection.focus)) ||
-    (!$isRangeSelection(selection) && !$isTableSelection(selection))
+    ($isRangeSelection(selection) && !selection.isCollapsed())
+    || ($isTableSelection(selection) && !selection.anchor.is(selection.focus))
+    || (!$isRangeSelection(selection) && !$isTableSelection(selection))
   ) {
     return false
   }
@@ -60,9 +60,11 @@ function $selectLastDescendant(node) {
   const lastDescendant = node.getLastDescendant()
   if ($isTextNode(lastDescendant)) {
     lastDescendant.select()
-  } else if ($isElementNode(lastDescendant)) {
+  }
+  else if ($isElementNode(lastDescendant)) {
     lastDescendant.selectEnd()
-  } else if (lastDescendant !== null) {
+  }
+  else if (lastDescendant !== null) {
     lastDescendant.selectNext()
   }
 }
@@ -88,8 +90,8 @@ function TableActionMenu({
     return editor.registerMutationListener(
       TableCellNode,
       (nodeMutations) => {
-        const nodeUpdated =
-          nodeMutations.get(tableCellNode.getKey()) === 'updated'
+        const nodeUpdated
+          = nodeMutations.get(tableCellNode.getKey()) === 'updated'
 
         if (nodeUpdated) {
           editor.getEditorState().read(() => {
@@ -97,7 +99,7 @@ function TableActionMenu({
           })
         }
       },
-      {skipInitialization: true},
+      { skipInitialization: true },
     )
   }, [editor, tableCellNode])
 
@@ -123,9 +125,9 @@ function TableActionMenu({
     const rootElement = editor.getRootElement()
 
     if (
-      menuButtonElement != null &&
-      dropDownElement != null &&
-      rootElement != null
+      menuButtonElement != null
+      && dropDownElement != null
+      && rootElement != null
     ) {
       const rootEleRect = rootElement.getBoundingClientRect()
       const menuButtonRect = menuButtonElement.getBoundingClientRect()
@@ -134,11 +136,11 @@ function TableActionMenu({
       const margin = 5
       let leftPosition = menuButtonRect.right + margin
       if (
-        leftPosition + dropDownElementRect.width > window.innerWidth ||
-        leftPosition + dropDownElementRect.width > rootEleRect.right
+        leftPosition + dropDownElementRect.width > window.innerWidth
+        || leftPosition + dropDownElementRect.width > rootEleRect.right
       ) {
-        const position =
-          menuButtonRect.left - dropDownElementRect.width - margin
+        const position
+          = menuButtonRect.left - dropDownElementRect.width - margin
         leftPosition = (position < 0 ? margin : position) + window.pageXOffset
       }
       dropDownElement.style.left = `${leftPosition + window.pageXOffset}px`
@@ -155,11 +157,11 @@ function TableActionMenu({
   useEffect(() => {
     function handleClickOutside(event) {
       if (
-        dropDownRef.current != null &&
-        contextRef.current != null &&
-        isDOMNode(event.target) &&
-        !dropDownRef.current.contains(event.target) &&
-        !contextRef.current.contains(event.target)
+        dropDownRef.current != null
+        && contextRef.current != null
+        && isDOMNode(event.target)
+        && !dropDownRef.current.contains(event.target)
+        && !contextRef.current.contains(event.target)
       ) {
         setIsMenuOpen(false)
       }
@@ -279,8 +281,8 @@ function TableActionMenu({
 
       const rowCells = new Set()
 
-      const newStyle =
-        tableCellNode.getHeaderStyles() ^ TableCellHeaderStates.ROW
+      const newStyle
+        = tableCellNode.getHeaderStyles() ^ TableCellHeaderStates.ROW
 
       for (let col = 0; col < gridMap[tableRowIndex].length; col++) {
         const mapCell = gridMap[tableRowIndex][col]
@@ -303,14 +305,14 @@ function TableActionMenu({
     editor.update(() => {
       const tableNode = $getTableNodeFromLexicalNodeOrThrow(tableCellNode)
 
-      const tableColumnIndex =
-        $getTableColumnIndexFromTableCellNode(tableCellNode)
+      const tableColumnIndex
+        = $getTableColumnIndexFromTableCellNode(tableCellNode)
 
       const [gridMap] = $computeTableMapSkipCellCheck(tableNode, null, null)
 
       const columnCells = new Set()
-      const newStyle =
-        tableCellNode.getHeaderStyles() ^ TableCellHeaderStates.COLUMN
+      const newStyle
+        = tableCellNode.getHeaderStyles() ^ TableCellHeaderStates.COLUMN
 
       for (let row = 0; row < gridMap.length; row++) {
         const mapCell = gridMap[row][tableColumnIndex]
@@ -370,7 +372,6 @@ function TableActionMenu({
     })
   }, [editor, tableCellNode, clearTableSelection, onClose])
 
-
   let mergeCellButton = null
   if (cellMerge) {
     if (canMergeCells) {
@@ -379,17 +380,20 @@ function TableActionMenu({
           type="button"
           className="item"
           onClick={() => mergeTableCellsAtSelection()}
-          data-test-id="table-merge-cells">
+          data-test-id="table-merge-cells"
+        >
           <span className="text">合并单元格</span>
         </button>
       )
-    } else if (canUnmergeCell) {
+    }
+    else if (canUnmergeCell) {
       mergeCellButton = (
         <button
           type="button"
           className="item"
           onClick={() => unmergeTableCellsAtSelection()}
-          data-test-id="table-unmerge-cells">
+          data-test-id="table-unmerge-cells"
+        >
           <span className="text">拆分单元格</span>
         </button>
       )
@@ -402,27 +406,31 @@ function TableActionMenu({
       ref={dropDownRef}
       onClick={(e) => {
         e.stopPropagation()
-      }}>
+      }}
+    >
       {mergeCellButton}
       <button
         type="button"
         className="item"
         onClick={() => toggleRowStriping()}
-        data-test-id="table-row-striping">
+        data-test-id="table-row-striping"
+      >
         <span className="text">设置条纹行</span>
       </button>
       <button
         type="button"
         className="item"
         onClick={() => toggleFirstRowFreeze()}
-        data-test-id="table-freeze-first-row">
+        data-test-id="table-freeze-first-row"
+      >
         <span className="text">固定第一行</span>
       </button>
       <button
         type="button"
         className="item"
         onClick={() => toggleFirstColumnFreeze()}
-        data-test-id="table-freeze-first-column">
+        data-test-id="table-freeze-first-column"
+      >
         <span className="text">固定第一列</span>
       </button>
       <hr />
@@ -430,20 +438,26 @@ function TableActionMenu({
         type="button"
         className="item"
         onClick={() => insertTableRowAtSelection(false)}
-        data-test-id="table-insert-row-above">
+        data-test-id="table-insert-row-above"
+      >
         <span className="text">
-          上方插入{' '}
-          {selectionCounts.rows === 1 ? '行' : `${selectionCounts.rows} 行`}{' '}
+          上方插入
+          {' '}
+          {selectionCounts.rows === 1 ? '行' : `${selectionCounts.rows} 行`}
+          {' '}
         </span>
       </button>
       <button
         type="button"
         className="item"
         onClick={() => insertTableRowAtSelection(true)}
-        data-test-id="table-insert-row-below">
+        data-test-id="table-insert-row-below"
+      >
         <span className="text">
-          下方插入{' '}
-          {selectionCounts.rows === 1 ? '行' : `${selectionCounts.rows} 行`}{' '}
+          下方插入
+          {' '}
+          {selectionCounts.rows === 1 ? '行' : `${selectionCounts.rows} 行`}
+          {' '}
         </span>
       </button>
       <hr />
@@ -451,24 +465,30 @@ function TableActionMenu({
         type="button"
         className="item"
         onClick={() => insertTableColumnAtSelection(false)}
-        data-test-id="table-insert-column-before">
+        data-test-id="table-insert-column-before"
+      >
         <span className="text">
-          左侧插入{' '}
+          左侧插入
+          {' '}
           {selectionCounts.columns === 1
             ? '列'
-            : `${selectionCounts.columns} 列`}{' '}
+            : `${selectionCounts.columns} 列`}
+          {' '}
         </span>
       </button>
       <button
         type="button"
         className="item"
         onClick={() => insertTableColumnAtSelection(true)}
-        data-test-id="table-insert-column-after">
+        data-test-id="table-insert-column-after"
+      >
         <span className="text">
-          右侧插入{' '}
+          右侧插入
+          {' '}
           {selectionCounts.columns === 1
             ? '列'
-            : `${selectionCounts.columns} 列`}{' '}
+            : `${selectionCounts.columns} 列`}
+          {' '}
         </span>
       </button>
       <hr />
@@ -476,21 +496,24 @@ function TableActionMenu({
         type="button"
         className="item"
         onClick={() => deleteTableColumnAtSelection()}
-        data-test-id="table-delete-columns">
+        data-test-id="table-delete-columns"
+      >
         <span className="text">删除列</span>
       </button>
       <button
         type="button"
         className="item"
         onClick={() => deleteTableRowAtSelection()}
-        data-test-id="table-delete-rows">
+        data-test-id="table-delete-rows"
+      >
         <span className="text">删除行</span>
       </button>
       <button
         type="button"
         className="item"
         onClick={() => deleteTableAtSelection()}
-        data-test-id="table-delete">
+        data-test-id="table-delete"
+      >
         <span className="text">删除表格</span>
       </button>
       <hr />
@@ -498,12 +521,14 @@ function TableActionMenu({
         type="button"
         className="item"
         onClick={() => toggleTableRowIsHeader()}
-        data-test-id="table-row-header">
+        data-test-id="table-row-header"
+      >
         <span className="text">
-          {(tableCellNode.__headerState & TableCellHeaderStates.ROW) ===
-          TableCellHeaderStates.ROW
+          {(tableCellNode.__headerState & TableCellHeaderStates.ROW)
+            === TableCellHeaderStates.ROW
             ? '删除'
-            : '添加'}{' '}
+            : '添加'}
+          {' '}
           表头
         </span>
       </button>
@@ -511,12 +536,14 @@ function TableActionMenu({
         type="button"
         className="item"
         onClick={() => toggleTableColumnIsHeader()}
-        data-test-id="table-column-header">
+        data-test-id="table-column-header"
+      >
         <span className="text">
-          {(tableCellNode.__headerState & TableCellHeaderStates.COLUMN) ===
-          TableCellHeaderStates.COLUMN
+          {(tableCellNode.__headerState & TableCellHeaderStates.COLUMN)
+            === TableCellHeaderStates.COLUMN
             ? '删除'
-            : '添加'}{' '}
+            : '添加'}
+          {' '}
           列头
         </span>
       </button>
@@ -555,8 +582,8 @@ function TableCellActionMenuContainer({
 
         // Only hide if the action button would overflow the container
         if (
-          actionButtonRight > containerRect.right ||
-          actionButtonLeft < containerRect.left
+          actionButtonRight > containerRect.right
+          || actionButtonLeft < containerRect.left
         ) {
           return true
         }
@@ -588,10 +615,10 @@ function TableCellActionMenuContainer({
     let tableCellParentNodeDOM
 
     if (
-      $isRangeSelection(selection) &&
-      rootElement !== null &&
-      nativeSelection !== null &&
-      rootElement.contains(nativeSelection.anchorNode)
+      $isRangeSelection(selection)
+      && rootElement !== null
+      && nativeSelection !== null
+      && rootElement.contains(nativeSelection.anchorNode)
     ) {
       const tableCellNodeFromSelection = $getTableCellNodeFromLexicalNode(
         selection.anchor.getNode(),
@@ -606,8 +633,8 @@ function TableCellActionMenuContainer({
       )
 
       if (
-        tableCellParentNodeDOM == null ||
-        !tableCellNodeFromSelection.isAttached()
+        tableCellParentNodeDOM == null
+        || !tableCellNodeFromSelection.isAttached()
       ) {
         return disable()
       }
@@ -632,7 +659,8 @@ function TableCellActionMenuContainer({
 
       tableObserver = getTableObserverFromTableElement(tableElement)
       setTableMenuCellNode(tableCellNodeFromSelection)
-    } else if ($isTableSelection(selection)) {
+    }
+    else if ($isTableSelection(selection)) {
       const anchorNode = $getTableCellNodeFromLexicalNode(
         selection.anchor.getNode(),
       )
@@ -659,7 +687,8 @@ function TableCellActionMenuContainer({
       if (checkTableCellOverflow(tableCellParentNodeDOM)) {
         return disable()
       }
-    } else if (!activeElement) {
+    }
+    else if (!activeElement) {
       return disable()
     }
     if (tableObserver === null || tableCellParentNodeDOM === null) {
@@ -738,7 +767,8 @@ function TableCellActionMenuContainer({
               e.stopPropagation()
               setIsMenuOpen(!isMenuOpen)
             }}
-            ref={menuRootRef}>
+            ref={menuRootRef}
+          >
             <i className="chevron-down" />
           </button>
           {isMenuOpen && (
@@ -762,12 +792,14 @@ export default function TableActionMenuPlugin({
 }) {
   const isEditable = useLexicalEditable()
   return createPortal(
-    isEditable ? (
-      <TableCellActionMenuContainer
-        anchorElem={anchorElem}
-        cellMerge={cellMerge}
-      />
-    ) : null,
+    isEditable
+      ? (
+          <TableCellActionMenuContainer
+            anchorElem={anchorElem}
+            cellMerge={cellMerge}
+          />
+        )
+      : null,
     anchorElem,
   )
 }

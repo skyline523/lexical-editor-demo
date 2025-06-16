@@ -38,8 +38,8 @@ export class ImageNode extends DecoratorNode {
   }
 
   static importJSON(serializedNode) {
-    const { altText, height, width, maxWidth, src } =
-      serializedNode
+    const { altText, height, width, maxWidth, src }
+      = serializedNode
     const node = $createImageNode({
       altText,
       height,

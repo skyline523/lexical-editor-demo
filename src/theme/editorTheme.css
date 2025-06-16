@@ -413,10 +413,7 @@ pre::-webkit-scrollbar-thumb {
 }
 
 .editor-table-rowStriping tr:nth-child(even),
-.editor-table-frozenColumn
-  .editor-table.editor-table-rowStriping
-  tr:nth-child(even)
-  > td:first-child {
+.editor-table-frozenColumn .editor-table.editor-table-rowStriping tr:nth-child(even) > td:first-child {
   background-color: #f2f5fb;
 }
 
@@ -569,6 +566,7 @@ pre::-webkit-scrollbar-thumb {
   user-select: none;
 }
 
-.editor-image-focused, .editor-embedBlockFocus {
-  outline: 2px solid rgb(60,132,244);
+.editor-image-focused,
+.editor-embedBlockFocus {
+  outline: 2px solid rgb(60, 132, 244);
 }

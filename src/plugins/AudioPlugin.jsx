@@ -1,17 +1,17 @@
-import { useState, useEffect } from 'react'
-import { COMMAND_PRIORITY_EDITOR, createCommand } from "lexical"
-import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext"
-import { mergeRegister } from "@lexical/utils"
-import { $createAudioNode, AudioNode } from "../nodes/AudioNode"
-import TextInput from '../components/Input/TextInput'
-import FileInput from '../components/Input/FileInput'
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
+import { mergeRegister } from '@lexical/utils'
 import { $insertNodeToNearestRoot } from '@lexical/utils'
+import { COMMAND_PRIORITY_EDITOR, createCommand } from 'lexical'
+import { useEffect, useState } from 'react'
+import FileInput from '../components/Input/FileInput'
+import TextInput from '../components/Input/TextInput'
+import { $createAudioNode, AudioNode } from '../nodes/AudioNode'
 
-export const INSERT_VIDEO_COMMAND = createCommand("INSERT_VIDEO_COMMAND")
+export const INSERT_VIDEO_COMMAND = createCommand('INSERT_VIDEO_COMMAND')
 
 export function InsertAudioDialog({
   editor,
-  onClose
+  onClose,
 }) {
   const [mode, setMode] = useState(null) // url | file
 
@@ -36,9 +36,9 @@ export function InsertAudioDialog({
 }
 
 export function InsertAudioUriDialog({ onClick }) {
-  const [src, setSrc] = useState("")
+  const [src, setSrc] = useState('')
 
-  const isDisabled = src === ""
+  const isDisabled = src === ''
 
   return (
     <>
@@ -62,9 +62,9 @@ export function InsertAudioUriDialog({ onClick }) {
 }
 
 export function InsertAudioUploadDialog({ onClick }) {
-  const [src, setSrc] = useState("")
+  const [src, setSrc] = useState('')
 
-  const isDisabled = src === ""
+  const isDisabled = src === ''
 
   const loadAudio = (files) => {
     console.log(files)
@@ -95,7 +95,7 @@ export default function AudioPlugin() {
 
   useEffect(() => {
     if (!editor.hasNodes([AudioNode])) {
-      throw new Error("AudioPlugin: AudioNode not registered on editor");
+      throw new Error('AudioPlugin: AudioNode not registered on editor')
     }
 
     return mergeRegister(
@@ -104,11 +104,11 @@ export default function AudioPlugin() {
         (payload) => {
           const audioNode = $createAudioNode(payload)
           $insertNodeToNearestRoot(audioNode)
-  
+
           return true
         },
-        COMMAND_PRIORITY_EDITOR
-      )
+        COMMAND_PRIORITY_EDITOR,
+      ),
     )
   }, [editor])
 }

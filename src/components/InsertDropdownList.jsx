@@ -1,35 +1,35 @@
-import { useRef, useEffect } from 'react'
-import { InsertTableDialog } from '../plugins/TablePlugin'
-import { InsertImageDialog } from '../plugins/ImagePlugin'
-import { InsertVideoDialog } from '../plugins/VideoPlugin'
+import { useEffect, useRef } from 'react'
 import { InsertAudioDialog } from '../plugins/AudioPlugin'
+import { InsertImageDialog } from '../plugins/ImagePlugin'
+import { InsertTableDialog } from '../plugins/TablePlugin'
+import { InsertVideoDialog } from '../plugins/VideoPlugin'
 
 export const insertTypes = new Set([
   // "horizontal-rule",
   // "page-break",
-  "image",
-  "table",
+  'image',
+  'table',
   // "audio",
-  "video",
+  'video',
 ])
 
 export const insertTypeToInsertName = {
-  "horizontal-rule": "分隔线",
-  "page-break": "分页符",
-  "image": "图片",
-  "table": "表格",
-  "audio": "音频",
-  "video": "视频"
+  'horizontal-rule': '分隔线',
+  'page-break': '分页符',
+  'image': '图片',
+  'table': '表格',
+  'audio': '音频',
+  'video': '视频',
 }
 
 function InsertDropdownList({
   editor,
   referenceRef,
   setVisible,
-  showModal
+  showModal,
 }) {
   const dropdownRef = useRef(null)
-  
+
   useEffect(() => {
     const button = referenceRef.current
     const dropdown = dropdownRef.current
@@ -64,12 +64,12 @@ function InsertDropdownList({
 
   return (
     <>
-      <div ref={dropdownRef} className='dropdown'>
+      <div ref={dropdownRef} className="dropdown">
         <button
           className="item"
           onClick={() => {
             setVisible(false)
-            showModal("插入图片", (onClose) => (
+            showModal('插入图片', onClose => (
               <InsertImageDialog
                 editor={editor}
                 onClose={onClose}
@@ -84,7 +84,7 @@ function InsertDropdownList({
           className="item"
           onClick={() => {
             setVisible(false)
-            showModal("插入表格", (onClose) => (
+            showModal('插入表格', onClose => (
               <InsertTableDialog
                 editor={editor}
                 onClose={onClose}
@@ -99,7 +99,7 @@ function InsertDropdownList({
           className="item"
           onClick={() => {
             setVisible(false)
-            showModal("插入视频", (onClose) => (
+            showModal('插入视频', onClose => (
               <InsertVideoDialog
                 editor={editor}
                 onClose={onClose}
@@ -114,7 +114,7 @@ function InsertDropdownList({
           className="item"
           onClick={() => {
             setVisible(false)
-            showModal("插入音频", (onClose) => (
+            showModal('插入音频', onClose => (
               <InsertAudioDialog
                 editor={editor}
                 onClose={onClose}

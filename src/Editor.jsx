@@ -1,45 +1,45 @@
-import { useState } from 'react'
-import { ParagraphNode, TextNode} from 'lexical'
-import { HeadingNode, QuoteNode } from '@lexical/rich-text'
-import { ListNode, ListItemNode } from '@lexical/list'
+import { CodeHighlightNode, CodeNode } from '@lexical/code'
 import { $generateHtmlFromNodes } from '@lexical/html'
+import { AutoLinkNode, LinkNode } from '@lexical/link'
+import { ListItemNode, ListNode } from '@lexical/list'
+import { TRANSFORMERS } from '@lexical/markdown'
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin'
-import { LexicalComposer } from '@lexical/react/LexicalComposer'
-import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin'
-import { ContentEditable } from '@lexical/react/LexicalContentEditable'
-import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin'
 import { ClickableLinkPlugin } from '@lexical/react/LexicalClickableLinkPlugin'
+import { LexicalComposer } from '@lexical/react/LexicalComposer'
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
+import { ContentEditable } from '@lexical/react/LexicalContentEditable'
 import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary'
-import { MarkdownShortcutPlugin } from '@lexical/react/LexicalMarkdownShortcutPlugin'
-import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin'
+import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin'
 import { LinkPlugin } from '@lexical/react/LexicalLinkPlugin'
 import { ListPlugin } from '@lexical/react/LexicalListPlugin'
-import { CodeNode, CodeHighlightNode } from '@lexical/code'
-import { LinkNode, AutoLinkNode } from '@lexical/link'
-import { TRANSFORMERS } from '@lexical/markdown'
+import { MarkdownShortcutPlugin } from '@lexical/react/LexicalMarkdownShortcutPlugin'
+import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin'
+import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin'
 import { TablePlugin } from '@lexical/react/LexicalTablePlugin'
-import { TableNode, TableCellNode, TableRowNode } from '@lexical/table'
+import { useLexicalEditable } from '@lexical/react/useLexicalEditable'
+import { HeadingNode, QuoteNode } from '@lexical/rich-text'
+import { TableCellNode, TableNode, TableRowNode } from '@lexical/table'
+import { ParagraphNode, TextNode } from 'lexical'
+import { useState } from 'react'
+import { useEffect } from 'react'
+
+import { AudioNode } from './nodes/AudioNode'
 import { ImageNode } from './nodes/ImageNode'
 import { VideoNode } from './nodes/VideoNode'
-import { AudioNode } from './nodes/AudioNode'
-
-import ContentInitPlugin from './plugins/ContentInitPlugin'
-import ToolbarPlugin from './plugins/ToolbarPlugin'
-import TreeViewPlugin from './plugins/TreeViewPlugin'
+import AudioPlugin from './plugins/AudioPlugin'
 import AutoLinkPlugin from './plugins/AutoLinkPlugin'
 import CodeHighlightPlugin from './plugins/CodeHighlightPlugin'
-import { TableContext } from './plugins/TablePlugin'
+import ContentInitPlugin from './plugins/ContentInitPlugin'
+import ImagePlugin from './plugins/ImagePlugin'
+import TableActionMenuPlugin from './plugins/TableActionMenuPlugin'
 import TableCellResizerPlugin from './plugins/TableCellResizer'
 import TableHoverActionsPlugin from './plugins/TableHoverActionPlugin'
-import TableActionMenuPlugin from './plugins/TableActionMenuPlugin'
-import ImagePlugin from './plugins/ImagePlugin'
-import VideoPlugin from './plugins/VideoPlugin'
-import AudioPlugin from './plugins/AudioPlugin'
+import { TableContext } from './plugins/TablePlugin'
 
+import ToolbarPlugin from './plugins/ToolbarPlugin'
+import TreeViewPlugin from './plugins/TreeViewPlugin'
+import VideoPlugin from './plugins/VideoPlugin'
 import editorTheme from './theme/editorTheme'
-import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
-import { useEffect } from 'react'
-import { useLexicalEditable } from '@lexical/react/useLexicalEditable'
 
 import './index.css'
 import './theme/editorTheme.css'
@@ -55,7 +55,7 @@ export default function Editor({
   placeholder = 'Enter some text...',
   disabled = false,
   mode = 'production', // development / production
-  onChange
+  onChange,
 }) {
   const initialConfig = {
     namespace: 'NanoEditor',
@@ -77,8 +77,8 @@ export default function Editor({
       TableCellNode,
       ImageNode,
       VideoNode,
-      AudioNode
-    ]
+      AudioNode,
+    ],
   }
 
   return (
@@ -103,7 +103,7 @@ function EditorContent({
   placeholder = 'Enter some text...',
   disabled = false,
   mode = 'production', // development / production
-  onChange
+  onChange,
 }) {
   const [floatingAnchorElem, setFloatingAnchorElem] = useState(null)
   const [isFullscreen, setFullscreen] = useState(false)
@@ -115,7 +115,7 @@ function EditorContent({
       editor.setEditable(!disabled)
     }
   }, [disabled])
-  
+
   function handleChange(editorState, editor) {
     editorState.read(() => {
       const html = $generateHtmlFromNodes(editor)
@@ -132,26 +132,26 @@ function EditorContent({
   return (
     <TableContext>
       <div
-        className='editor-container'
+        className="editor-container"
         style={{
           position: isFullscreen ? 'fixed' : 'relative',
           width: isFullscreen ? '100%' : width || 1024,
-          height: isFullscreen ? '100%' : 'auto'
+          height: isFullscreen ? '100%' : 'auto',
         }}
       >
         <ToolbarPlugin
           isFullscreen={isFullscreen}
           setFullscreen={setFullscreen}
         />
-        <div className='editor-inner'>
+        <div className="editor-inner">
           <RichTextPlugin
-            contentEditable={
-              <div className='editor-scroller'>
-                <div className='editor' ref={onRef}>
-                  <ContentEditable disabled={isEditable} className='editor-input' style={{ height: isFullscreen ? 'auto' : height }} />
+            contentEditable={(
+              <div className="editor-scroller">
+                <div className="editor" ref={onRef}>
+                  <ContentEditable disabled={isEditable} className="editor-input" style={{ height: isFullscreen ? 'auto' : height }} />
                 </div>
               </div>
-            }
+            )}
             placeholder={<div className="editor-placeholder">{placeholder}</div>}
             ErrorBoundary={LexicalErrorBoundary}
           />

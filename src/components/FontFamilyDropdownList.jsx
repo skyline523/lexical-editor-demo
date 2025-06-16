@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
 export const FONT_FAMILY_OPTIONS = [
   ['默认', 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif'],
@@ -11,7 +11,7 @@ export const FONT_FAMILY_OPTIONS = [
   ['Georgia', 'Georgia, "Times New Roman", Times, serif'],
   ['Times New Roman', '"Times New Roman", Times, serif'],
   ['Trebuchet MS', '"Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Arial, sans-serif'],
-  ['Verdana', 'Verdana, Geneva, Tahoma, sans-serif']
+  ['Verdana', 'Verdana, Geneva, Tahoma, sans-serif'],
 ]
 
 export function getFontFamily(value) {
@@ -24,10 +24,10 @@ function FontFamilyDropdownList({
   value,
   referenceRef,
   setVisible,
-  onChange
+  onChange,
 }) {
   const dropdownRef = useRef(null)
-  
+
   useEffect(() => {
     const button = referenceRef.current
     const dropdown = dropdownRef.current
@@ -61,11 +61,11 @@ function FontFamilyDropdownList({
   }, [dropdownRef, referenceRef, setVisible])
 
   return (
-    <div ref={dropdownRef} className='dropdown'>
+    <div ref={dropdownRef} className="dropdown">
       {FONT_FAMILY_OPTIONS.map(([text, option]) => (
         <button
           key={text}
-          className={`item${option === value ? " active" : ""}`}
+          className={`item${option === value ? ' active' : ''}`}
           onClick={() => {
             onChange(option)
             setVisible(false)

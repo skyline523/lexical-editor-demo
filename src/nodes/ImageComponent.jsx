@@ -1,6 +1,6 @@
-import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext"
-import { useLexicalNodeSelection } from "@lexical/react/useLexicalNodeSelection"
-import { mergeRegister } from "@lexical/utils"
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
+import { useLexicalNodeSelection } from '@lexical/react/useLexicalNodeSelection'
+import { mergeRegister } from '@lexical/utils'
 import {
   $getNodeByKey,
   $getSelection,
@@ -10,10 +10,10 @@ import {
   KEY_BACKSPACE_COMMAND,
   KEY_DELETE_COMMAND,
   SELECTION_CHANGE_COMMAND,
-} from "lexical"
-import { Suspense, useCallback, useEffect, useRef, useState } from "react"
+} from 'lexical'
+import { Suspense, useCallback, useEffect, useRef, useState } from 'react'
 
-import { $isImageNode } from "./ImageNode"
+import { $isImageNode } from './ImageNode'
 
 const imageCache = new Set()
 
@@ -64,8 +64,8 @@ export default function ImageComponent({
   maxWidth,
 }) {
   const imageRef = useRef(null)
-  const [isSelected, setSelected, clearSelection] =
-    useLexicalNodeSelection(nodeKey)
+  const [isSelected, setSelected, clearSelection]
+    = useLexicalNodeSelection(nodeKey)
   const [editor] = useLexicalComposerContext()
   const [, setSelection] = useState(null)
   const activeEditorRef = useRef(null)
@@ -82,7 +82,7 @@ export default function ImageComponent({
       }
       return false
     },
-    [isSelected, nodeKey]
+    [isSelected, nodeKey],
   )
 
   const onClick = useCallback(
@@ -92,7 +92,8 @@ export default function ImageComponent({
       if (event.target === imageRef.current) {
         if (event.shiftKey) {
           setSelected(!isSelected)
-        } else {
+        }
+        else {
           clearSelection()
           setSelected(true)
         }
@@ -101,7 +102,7 @@ export default function ImageComponent({
 
       return false
     },
-    [isSelected, setSelected, clearSelection]
+    [isSelected, setSelected, clearSelection],
   )
 
   useEffect(() => {
@@ -118,22 +119,22 @@ export default function ImageComponent({
           activeEditorRef.current = activeEditor
           return false
         },
-        COMMAND_PRIORITY_LOW
+        COMMAND_PRIORITY_LOW,
       ),
       editor.registerCommand(
         CLICK_COMMAND,
         onClick,
-        COMMAND_PRIORITY_LOW
+        COMMAND_PRIORITY_LOW,
       ),
       editor.registerCommand(
         KEY_DELETE_COMMAND,
         onDelete,
-        COMMAND_PRIORITY_LOW
+        COMMAND_PRIORITY_LOW,
       ),
       editor.registerCommand(
         KEY_BACKSPACE_COMMAND,
         onDelete,
-        COMMAND_PRIORITY_LOW
+        COMMAND_PRIORITY_LOW,
       ),
     )
 
@@ -156,7 +157,7 @@ export default function ImageComponent({
     <Suspense fallback={null}>
       <div>
         <LazyImage
-          className={ isFocused ? `editor-image-focused` : null }
+          className={isFocused ? `editor-image-focused` : null}
           src={src}
           altText={altText}
           imageRef={imageRef}

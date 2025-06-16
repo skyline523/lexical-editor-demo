@@ -1,12 +1,12 @@
-import { $applyNodeReplacement } from "lexical"
-import { DecoratorBlockNode } from "@lexical/react/LexicalDecoratorBlockNode"
-import { BlockWithAlignableContents } from "@lexical/react/LexicalBlockWithAlignableContents"
+import { BlockWithAlignableContents } from '@lexical/react/LexicalBlockWithAlignableContents'
+import { DecoratorBlockNode } from '@lexical/react/LexicalDecoratorBlockNode'
+import { $applyNodeReplacement } from 'lexical'
 
 function VideoComponent({
   src,
   className,
   nodeKey,
-  format
+  format,
 }) {
   return (
     <BlockWithAlignableContents
@@ -31,7 +31,6 @@ function convertVideoElement(domNode) {
   }
   return null
 }
-
 
 export class VideoNode extends DecoratorBlockNode {
   __src
@@ -104,7 +103,7 @@ export class VideoNode extends DecoratorBlockNode {
     const embedBlockTheme = config.theme.embedBlock || {}
     const className = {
       base: embedBlockTheme.base || '',
-      focus: embedBlockTheme.focus || ''
+      focus: embedBlockTheme.focus || '',
     }
 
     return (

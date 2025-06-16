@@ -30,15 +30,15 @@ function TableHoverActionsContainer({
   const isEditable = useLexicalEditable()
   const [isShownRow, setShownRow] = useState(false)
   const [isShownColumn, setShownColumn] = useState(false)
-  const [shouldListenMouseMove, setShouldListenMouseMove] =
-    useState(false)
+  const [shouldListenMouseMove, setShouldListenMouseMove]
+    = useState(false)
   const [position, setPosition] = useState({})
   const tableSetRef = useRef(new Set())
   const tableCellDOMNodeRef = useRef(null)
 
   const debouncedOnMouseMove = useDebounce(
     (event) => {
-      const {isOutside, tableDOMNode} = getMouseInfo(event, getTheme)
+      const { isOutside, tableDOMNode } = getMouseInfo(event, getTheme)
 
       if (isOutside) {
         setShownRow(false)
@@ -61,9 +61,8 @@ function TableHoverActionsContainer({
           const maybeTableCell = $getNearestNodeFromDOMNode(tableDOMNode)
 
           if ($isTableCellNode(maybeTableCell)) {
-            const table = $findMatchingParent(maybeTableCell, (node) =>
-              $isTableNode(node),
-            )
+            const table = $findMatchingParent(maybeTableCell, node =>
+              $isTableNode(node))
             if (!$isTableNode(table)) {
               return
             }
@@ -79,20 +78,21 @@ function TableHoverActionsContainer({
                 (table).getChildAtIndex(0)
               )?.getChildrenSize()
 
-              const rowIndex =
-                $getTableRowIndexFromTableCellNode(maybeTableCell)
-              const colIndex =
-                $getTableColumnIndexFromTableCellNode(maybeTableCell)
+              const rowIndex
+                = $getTableRowIndexFromTableCellNode(maybeTableCell)
+              const colIndex
+                = $getTableColumnIndexFromTableCellNode(maybeTableCell)
 
               if (rowIndex === rowCount - 1) {
                 hoveredRowNode = maybeTableCell
-              } else if (colIndex === colCount - 1) {
+              }
+              else if (colIndex === colCount - 1) {
                 hoveredColumnNode = maybeTableCell
               }
             }
           }
         },
-        {editor},
+        { editor },
       )
 
       if (tableDOMElement) {
@@ -110,16 +110,16 @@ function TableHoverActionsContainer({
           .parentElement
         let tableHasScroll = false
         if (
-          parentElement &&
-          parentElement.classList.contains(
+          parentElement
+          && parentElement.classList.contains(
             'editor-table-scrollableWrapper',
           )
         ) {
-          tableHasScroll =
-            parentElement.scrollWidth > parentElement.clientWidth
+          tableHasScroll
+            = parentElement.scrollWidth > parentElement.clientWidth
         }
-        const {y: editorElemY, left: editorElemLeft} =
-          anchorElem.getBoundingClientRect()
+        const { y: editorElemY, left: editorElemLeft }
+          = anchorElem.getBoundingClientRect()
 
         if (hoveredRowNode) {
           setShownColumn(false)
@@ -136,7 +136,8 @@ function TableHoverActionsContainer({
                 ? parentElement.offsetWidth
                 : tableElemWidth,
           })
-        } else if (hoveredColumnNode) {
+        }
+        else if (hoveredColumnNode) {
           setShownColumn(true)
           setShownRow(false)
           setPosition({
@@ -204,16 +205,16 @@ function TableHoverActionsContainer({
                 // Reset resize observers
                 tableResizeObserver.disconnect()
                 for (const tableKey of tableSetRef.current) {
-                  const {tableElement} = $getTableAndElementByKey(tableKey)
+                  const { tableElement } = $getTableAndElementByKey(tableKey)
                   tableResizeObserver.observe(tableElement)
                 }
                 setShouldListenMouseMove(tableSetRef.current.size > 0)
               }
             },
-            {editor},
+            { editor },
           )
         },
-        {skipInitialization: false},
+        { skipInitialization: false },
       ),
     )
   }, [editor, tableResizeObserver])
@@ -228,7 +229,8 @@ function TableHoverActionsContainer({
         if (insertRow) {
           $insertTableRowAtSelection()
           setShownRow(false)
-        } else {
+        }
+        else {
           $insertTableColumnAtSelection()
           setShownColumn(false)
         }
@@ -245,14 +247,14 @@ function TableHoverActionsContainer({
       {isShownRow && (
         <button
           className={`${getTheme()?.tableAddRows}`}
-          style={{...position}}
+          style={{ ...position }}
           onClick={() => insertAction(true)}
         />
       )}
       {isShownColumn && (
         <button
           className={`${getTheme()?.tableAddColumns}`}
-          style={{...position}}
+          style={{ ...position }}
           onClick={() => insertAction(false)}
         />
       )}
@@ -272,19 +274,20 @@ function getMouseInfo(
     )
 
     const isOutside = !(
-      tableDOMNode ||
-      target.closest(
+      tableDOMNode
+      || target.closest(
         `button.editor-table-addRows`,
-      ) ||
-      target.closest(
+      )
+      || target.closest(
         `button.editor-table-addColumns`,
-      ) ||
-      target.closest('div.editor-table-cellResizer')
+      )
+      || target.closest('div.editor-table-cellResizer')
     )
 
-    return {isOutside, tableDOMNode}
-  } else {
-    return {isOutside: true, tableDOMNode: null}
+    return { isOutside, tableDOMNode }
+  }
+  else {
+    return { isOutside: true, tableDOMNode: null }
   }
 }
 

@@ -1,17 +1,17 @@
-import { useState, useEffect } from "react"
-import { $createParagraphNode, $insertNodes, $isRootOrShadowRoot, COMMAND_PRIORITY_EDITOR, createCommand } from "lexical"
-import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext"
-import { mergeRegister } from "@lexical/utils"
-import { $wrapNodeInElement } from "@lexical/utils"
-import { $createImageNode, ImageNode } from "../nodes/ImageNode"
-import TextInput from "../components/Input/TextInput"
-import FileInput from "../components/Input/FileInput"
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
+import { mergeRegister } from '@lexical/utils'
+import { $wrapNodeInElement } from '@lexical/utils'
+import { $createParagraphNode, $insertNodes, $isRootOrShadowRoot, COMMAND_PRIORITY_EDITOR, createCommand } from 'lexical'
+import { useEffect, useState } from 'react'
+import FileInput from '../components/Input/FileInput'
+import TextInput from '../components/Input/TextInput'
+import { $createImageNode, ImageNode } from '../nodes/ImageNode'
 
-export const INSERT_IMAGE_COMMAND = createCommand("INSERT_IMAGE_COMMAND")
+export const INSERT_IMAGE_COMMAND = createCommand('INSERT_IMAGE_COMMAND')
 
 export function InsertImageDialog({
   editor,
-  onClose
+  onClose,
 }) {
   const [mode, setMode] = useState(null) // url | file
 
@@ -36,10 +36,10 @@ export function InsertImageDialog({
 }
 
 export function InsertImageUriDialog({ onClick }) {
-  const [src, setSrc] = useState("")
-  const [altText, setAltText] = useState("")
+  const [src, setSrc] = useState('')
+  const [altText, setAltText] = useState('')
 
-  const isDisabled = src === ""
+  const isDisabled = src === ''
 
   return (
     <>
@@ -59,7 +59,7 @@ export function InsertImageUriDialog({ onClick }) {
         <button
           className="dialog-actions-button"
           disabled={isDisabled}
-          onClick={() => onClick({ src, altText  })}
+          onClick={() => onClick({ src, altText })}
         >
           确定
         </button>
@@ -69,10 +69,10 @@ export function InsertImageUriDialog({ onClick }) {
 }
 
 export function InsertImageUploadDialog({ onClick }) {
-  const [src, setSrc] = useState("")
-  const [altText, setAltText] = useState("")
+  const [src, setSrc] = useState('')
+  const [altText, setAltText] = useState('')
 
-  const isDisabled = src === ""
+  const isDisabled = src === ''
 
   const loadImage = (files) => {
     console.log(files)
@@ -109,7 +109,7 @@ export default function ImagePlugin() {
 
   useEffect(() => {
     if (!editor.hasNodes([ImageNode])) {
-      throw new Error("ImagesPlugin: ImageNode not registered on editor");
+      throw new Error('ImagesPlugin: ImageNode not registered on editor')
     }
 
     return mergeRegister(
@@ -121,11 +121,11 @@ export default function ImagePlugin() {
           if ($isRootOrShadowRoot(imageNode.getParentOrThrow())) {
             $wrapNodeInElement(imageNode, $createParagraphNode).selectEnd()
           }
-  
+
           return true
         },
-        COMMAND_PRIORITY_EDITOR
-      )
+        COMMAND_PRIORITY_EDITOR,
+      ),
     )
   }, [editor])
 }
